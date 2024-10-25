@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  web:
+    build: ./frontend
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    networks:
+      - network-backend
+    restart: unless-stopped # Ensure the web service restarts on failure
+    
+  api:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    networks: 
+      - network-backend
+    restart: unless-stopped # Ensure the API service restarts on failure
+
+networks:
+  network-backend:
+    driver: bridge # Optionally specify a driver
